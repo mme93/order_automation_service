@@ -28,14 +28,19 @@ public class SMSService {
         this.webClient = WebClient.builder().build();
     }
 
-    public String sendMsg(SMS sms){
+    public String sendMsg(SMS sms) {
 
-        WebClient.RequestBodySpec requestBodySpec = this.webClient.post().uri(env.getProperty("sms.url"));
+        WebClient.RequestBodySpec requestBodySpec = this.webClient.post().uri(env.getProperty("sms.url")+"SMS");
         requestBodySpec
                 .body(Mono.just(new JSONObject(sms).toString()), String.class)
                 .headers(httpHeaders -> httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8));
         String response = requestBodySpec.retrieve().bodyToMono(String.class).block();
         return response;
     }
+    public boolean initGSMModule(){
+        String response = this.webClient.get().uri(env.getProperty("sms.url")+"init").retrieve().bodyToMono(String.class).block();
+        return response.equals("Okay");
+    }
 
 }
+

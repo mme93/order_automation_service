@@ -5,10 +5,7 @@ import automation_order.backend.sms.service.SMSService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.ConnectException;
 
@@ -28,9 +25,22 @@ public class SMSController {
     @PostMapping("/send")
     public ResponseEntity<String> senSMS(@RequestBody SMS sms) {
         try{
-            return new ResponseEntity<String>(smsService.sendMsg(sms), HttpStatus.OK);
+            return new ResponseEntity<>(smsService.sendMsg(sms), HttpStatus.OK);
         }catch (Exception e){
-            return new ResponseEntity<String>(e.getMessage(), HttpStatus.REQUEST_TIMEOUT);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.REQUEST_TIMEOUT);
+        }
+    }
+
+    @GetMapping("/init")
+    public ResponseEntity<String> initGSMModule(){
+        try{
+            if(smsService.initGSMModule()){
+                return new ResponseEntity<>(HttpStatus.OK);
+            }else{
+                return new ResponseEntity<>(HttpStatus.CONFLICT);
+            }
+        }catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.REQUEST_TIMEOUT);
         }
     }
 
