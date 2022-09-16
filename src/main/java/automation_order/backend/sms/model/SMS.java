@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 public class SMS {
 
-    private String SMS;
-    private String phoneNumber;
+    private String phone;
+    private String msg;
 
 }
