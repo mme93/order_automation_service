@@ -5,16 +5,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @Entity
+@Table(name = "user")
 public class UserEntity {
 
     @Id
@@ -27,4 +25,9 @@ public class UserEntity {
 
     private String roll;
 
+    public UserEntity(String password, String username, String roll) {
+        this.password = password;
+        this.username = username;
+        this.roll = roll;
+    }
 }
