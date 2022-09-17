@@ -4,10 +4,10 @@ import automation_order.backend.account.model.dto.UserDto;
 import automation_order.backend.account.model.entity.UserEntity;
 import automation_order.backend.account.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -27,6 +27,11 @@ public class UserController {
                 userDto.getUsername(),
                 userDto.getRoll())
         );
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<UserDto>>getAllUsers(){
+        return null;
     }
 
 }
