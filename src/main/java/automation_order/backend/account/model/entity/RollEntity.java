@@ -21,5 +21,7 @@ public class RollEntity {
 
     private String name;
 
-
+    public RollEntity(String name) {
+        this.name = name;
+    }
 }
