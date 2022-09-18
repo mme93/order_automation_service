@@ -20,4 +20,8 @@ public class CompanyEntity {
     private Long id;
 
     private String name;
+
+    public CompanyEntity(String name) {
+        this.name = name;
+    }
 }

@@ -2,6 +2,7 @@ package automation_order.backend.account.controller;
 
 import automation_order.backend.account.model.dto.RollDto;
 import automation_order.backend.account.service.RollService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ public class RollController {
 
     private final RollService rollService;
 
+    @Autowired
     public RollController(RollService rollService) {
         this.rollService = rollService;
     }

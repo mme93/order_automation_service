@@ -3,6 +3,7 @@ package automation_order.backend.account.service;
 import automation_order.backend.account.model.dto.RollDto;
 import automation_order.backend.account.model.entity.RollEntity;
 import automation_order.backend.account.repository.RollRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ public class RollService {
 
     private final RollRepository rollRepository;
 
+    @Autowired
     public RollService(RollRepository rollRepository) {
         this.rollRepository = rollRepository;
     }
