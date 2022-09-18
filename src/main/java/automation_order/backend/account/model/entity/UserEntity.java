@@ -25,9 +25,12 @@ public class UserEntity {
 
     private String roll;
 
-    public UserEntity(String password, String username, String roll) {
+    private String company;
+
+    public UserEntity(String password, String username, String roll,String company) {
         this.password = password;
         this.username = username;
         this.roll = roll;
+        this.company=company;
     }
 }

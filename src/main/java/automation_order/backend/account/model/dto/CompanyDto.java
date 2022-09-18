@@ -9,14 +9,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class UserDto {
+public class CompanyDto {
 
-    private String password;
-
-    private String username;
-
-    private String company;
-
-    private String roll;
+    private String name;
 
 }

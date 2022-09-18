@@ -12,14 +12,12 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-@Table(name = "roll")
-public class RollEntity {
+@Table(name = "company")
+public class CompanyEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
-
-
 }
