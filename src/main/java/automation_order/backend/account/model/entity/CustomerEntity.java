@@ -19,6 +19,30 @@ public class CustomerEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String firstName;
 
+    private String lastName;
+
+    private String email;
+
+    private String city;
+
+    private String street;
+
+    private String postalCode;
+
+    private String callNumber;
+
+    private String information;
+
+    public CustomerEntity(String firstName, String lastName, String email, String city, String street, String postalCode, String callNumber, String information) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.city = city;
+        this.street = street;
+        this.postalCode = postalCode;
+        this.callNumber = callNumber;
+        this.information = information;
+    }
 }

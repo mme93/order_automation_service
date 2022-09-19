@@ -11,6 +11,20 @@ import lombok.Setter;
 @Setter
 public class CustomerDto {
 
-    private String name;
+    private String firstName;
+
+    private String lastName;
+
+    private String email;
+
+    private String city;
+
+    private String street;
+
+    private String postalCode;
+
+    private String callNumber;
+
+    private String information;
 
 }
