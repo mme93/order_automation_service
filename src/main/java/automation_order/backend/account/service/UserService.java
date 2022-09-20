@@ -32,6 +32,7 @@ public class UserService {
                     userEntity.getLastName(),
                     userEntity.getEmail(),
                     userEntity.getCallNumber(),
+                    userEntity.getCompany(),
                     userEntity.getRoll(),
                     userEntity.getInfo()
             ));
@@ -47,6 +48,7 @@ public class UserService {
                 userEntity.getLastName(),
                 userEntity.getEmail(),
                 userEntity.getCallNumber(),
+                userEntity.getCompany(),
                 userEntity.getRoll(),
                 userEntity.getInfo()
         );

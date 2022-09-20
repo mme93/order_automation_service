@@ -29,12 +29,13 @@ public class UserDto {
 
     private String info;
 
-    public UserDto(String username, String firstName, String lastName, String email, String callNumber, String roll, String info) {
+    public UserDto(String username, String firstName, String lastName, String email, String callNumber, String company, String roll, String info) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.callNumber = callNumber;
+        this.company = company;
         this.roll = roll;
         this.info = info;
     }

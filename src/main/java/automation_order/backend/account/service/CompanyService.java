@@ -2,9 +2,12 @@ package automation_order.backend.account.service;
 
 import automation_order.backend.account.model.dto.CompanyDto;
 import automation_order.backend.account.model.entity.CompanyEntity;
+import automation_order.backend.account.model.entity.UserEntity;
 import automation_order.backend.account.repository.CompanyRepository;
 import automation_order.backend.security.utility.JWTUtility;
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -44,24 +47,26 @@ public class CompanyService {
         return true;
     }
 
-    public CompanyDto getCompany(String authorization) {
-        CompanyEntity companyEntity = companyRepository.findByCompanyName(
-                userService.findUserByName(
-                                jwtUtility.getUsernameFromToken(authorization.substring(7))
-                        ).
-                        getCompany());
-        return new CompanyDto(
-                companyEntity.getCompanyName(),
-                companyEntity.getFirstName(),
-                companyEntity.getLastName(),
-                companyEntity.getEmail(),
-                companyEntity.getCity(),
-                companyEntity.getStreet(),
-                companyEntity.getPostalCode(),
-                companyEntity.getCallNumber(),
-                companyEntity.getSector(),
-                userService.findUsersByCompany(companyEntity.getCompanyName())
-        );
+    public CompanyDto getCompany(String authorization) throws ObjectNotFoundException {
+        String company=userService.findUserByName(
+                jwtUtility.getUsernameFromToken(authorization.substring(7))).getCompany();
+        for (CompanyEntity companyEntity : companyRepository.findAll()) {
+            if (companyEntity.getCompanyName().equals(company)) {
+                return new CompanyDto(
+                        companyEntity.getCompanyName(),
+                        companyEntity.getFirstName(),
+                        companyEntity.getLastName(),
+                        companyEntity.getEmail(),
+                        companyEntity.getCity(),
+                        companyEntity.getStreet(),
+                        companyEntity.getPostalCode(),
+                        companyEntity.getCallNumber(),
+                        companyEntity.getSector(),
+                        userService.findUsersByCompany(companyEntity.getCompanyName())
+                );
+            }
+        }
+        return null;
     }
 
     public List<CompanyDto> getAll() {
