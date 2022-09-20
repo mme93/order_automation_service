@@ -25,8 +25,13 @@ public class UserController {
         this.userService.createUser(new UserEntity(
                 userDto.getPassword(),
                 userDto.getUsername(),
+                userDto.getFirstName(),
+                userDto.getLastName(),
+                userDto.getEmail(),
+                userDto.getCallNumber(),
                 userDto.getRoll(),
-                userDto.getCompany())
+                userDto.getCompany(),
+                userDto.getInfo())
         );
     }
 

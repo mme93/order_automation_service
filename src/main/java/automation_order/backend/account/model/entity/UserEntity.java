@@ -23,14 +23,29 @@ public class UserEntity {
 
     private String username;
 
+    private String firstName;
+
+    private String lastName;
+
+    private String email;
+
+    private String callNumber;
+
     private String roll;
 
     private String company;
 
-    public UserEntity(String password, String username, String roll,String company) {
+    private String info;
+
+    public UserEntity(String password, String username, String firstName, String lastName, String email, String callNumber, String roll, String company, String info) {
         this.password = password;
         this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.callNumber = callNumber;
         this.roll = roll;
-        this.company=company;
+        this.company = company;
+        this.info = info;
     }
 }

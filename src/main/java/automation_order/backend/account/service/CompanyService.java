@@ -1,10 +1,9 @@
 package automation_order.backend.account.service;
 
 import automation_order.backend.account.model.dto.CompanyDto;
-import automation_order.backend.account.model.dto.RollDto;
 import automation_order.backend.account.model.entity.CompanyEntity;
-import automation_order.backend.account.model.entity.RollEntity;
 import automation_order.backend.account.repository.CompanyRepository;
+import automation_order.backend.security.utility.JWTUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,10 +14,14 @@ import java.util.List;
 public class CompanyService {
 
     private final CompanyRepository companyRepository;
+    private final UserService userService;
+    private final JWTUtility jwtUtility;
 
     @Autowired
-    public CompanyService(CompanyRepository companyRepository) {
+    public CompanyService(CompanyRepository companyRepository, UserService userService, JWTUtility jwtUtility) {
         this.companyRepository = companyRepository;
+        this.userService = userService;
+        this.jwtUtility = jwtUtility;
     }
 
     public boolean createCompany(CompanyDto companyDto) {
@@ -39,6 +42,26 @@ public class CompanyService {
                 companyDto.getSector()
         ));
         return true;
+    }
+
+    public CompanyDto getCompany(String authorization) {
+        CompanyEntity companyEntity = companyRepository.findByCompanyName(
+                userService.findUserByName(
+                                jwtUtility.getUsernameFromToken(authorization.substring(7))
+                        ).
+                        getCompany());
+        return new CompanyDto(
+                companyEntity.getCompanyName(),
+                companyEntity.getFirstName(),
+                companyEntity.getLastName(),
+                companyEntity.getEmail(),
+                companyEntity.getCity(),
+                companyEntity.getStreet(),
+                companyEntity.getPostalCode(),
+                companyEntity.getCallNumber(),
+                companyEntity.getSector(),
+                userService.findUsersByCompany(companyEntity.getCompanyName())
+        );
     }
 
     public List<CompanyDto> getAll() {

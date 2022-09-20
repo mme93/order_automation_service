@@ -1,8 +1,8 @@
 package automation_order.backend.account.controller;
 
 import automation_order.backend.account.model.dto.CompanyDto;
-import automation_order.backend.account.model.dto.RollDto;
 import automation_order.backend.account.service.CompanyService;
+import automation_order.backend.security.utility.JWTUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +30,10 @@ public class CompanyController {
         }
 
     }
-
+    @GetMapping("/")
+    public ResponseEntity<CompanyDto>getCompany(@RequestHeader("Authorization")String authorization){
+        return new ResponseEntity(companyService.getCompany(authorization),HttpStatus.OK);
+    }
     @GetMapping("/all")
     public ResponseEntity<List<CompanyDto>>getAll(){
         List<CompanyDto>companyDtos=companyService.getAll();

@@ -15,13 +15,27 @@ public class UserDto {
 
     private String username;
 
+    private String firstName;
+
+    private String lastName;
+
+    private String email;
+
+    private String callNumber;
+
     private String company;
 
     private String roll;
 
-    public UserDto(String username, String company, String roll) {
+    private String info;
+
+    public UserDto(String username, String firstName, String lastName, String email, String callNumber, String roll, String info) {
         this.username = username;
-        this.company = company;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.callNumber = callNumber;
         this.roll = roll;
+        this.info = info;
     }
 }
