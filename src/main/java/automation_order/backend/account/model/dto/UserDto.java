@@ -19,4 +19,9 @@ public class UserDto {
 
     private String roll;
 
+    public UserDto(String username, String company, String roll) {
+        this.username = username;
+        this.company = company;
+        this.roll = roll;
+    }
 }

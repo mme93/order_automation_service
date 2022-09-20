@@ -23,18 +23,38 @@ public class CompanyService {
 
     public boolean createCompany(CompanyDto companyDto) {
         for (CompanyEntity companyEntity : companyRepository.findAll()) {
-            if (companyEntity.getName().equals(companyDto.getName())) {
+            if (companyEntity.getCompanyName().equals(companyDto.getCompanyName())) {
                 return false;
             }
         }
-        companyRepository.save(new CompanyEntity(companyDto.getName()));
+        companyRepository.save(new CompanyEntity(
+                companyDto.getCompanyName(),
+                companyDto.getFirstName(),
+                companyDto.getLastName(),
+                companyDto.getEmail(),
+                companyDto.getCity(),
+                companyDto.getStreet(),
+                companyDto.getPostalCode(),
+                companyDto.getCallNumber(),
+                companyDto.getSector()
+        ));
         return true;
     }
 
     public List<CompanyDto> getAll() {
         List<CompanyDto> companyDtos = new ArrayList<>();
         for (CompanyEntity companyEntity : companyRepository.findAll()) {
-            companyDtos.add(new CompanyDto(companyEntity.getName()));
+            companyDtos.add(new CompanyDto(
+                    companyEntity.getCompanyName(),
+                    companyEntity.getFirstName(),
+                    companyEntity.getLastName(),
+                    companyEntity.getEmail(),
+                    companyEntity.getCity(),
+                    companyEntity.getStreet(),
+                    companyEntity.getPostalCode(),
+                    companyEntity.getCallNumber(),
+                    companyEntity.getSector()
+            ));
         }
         return companyDtos;
     }

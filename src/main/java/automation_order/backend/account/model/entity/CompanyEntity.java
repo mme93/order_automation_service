@@ -19,9 +19,33 @@ public class CompanyEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String companyName;
 
-    public CompanyEntity(String name) {
-        this.name = name;
+    private String firstName;
+
+    private String lastName;
+
+    private String email;
+
+    private String city;
+
+    private String street;
+
+    private String postalCode;
+
+    private String callNumber;
+
+    private String sector;
+
+    public CompanyEntity(String companyName, String firstName, String lastName, String email, String city, String street, String postalCode, String callNumber, String sector) {
+        this.companyName = companyName;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.city = city;
+        this.street = street;
+        this.postalCode = postalCode;
+        this.callNumber = callNumber;
+        this.sector = sector;
     }
 }
