@@ -35,7 +35,9 @@ public class CustomerEntity {
 
     private String information;
 
-    public CustomerEntity(String firstName, String lastName, String email, String city, String street, String postalCode, String callNumber, String information) {
+    private String company;
+
+    public CustomerEntity(String firstName, String lastName, String email, String city, String street, String postalCode, String callNumber, String information, String company) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -44,5 +46,6 @@ public class CustomerEntity {
         this.postalCode = postalCode;
         this.callNumber = callNumber;
         this.information = information;
+        this.company = company;
     }
 }

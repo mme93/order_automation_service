@@ -27,4 +27,6 @@ public class CustomerDto {
 
     private String information;
 
+    private String company;
+
 }
