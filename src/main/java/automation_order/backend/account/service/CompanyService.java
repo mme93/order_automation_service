@@ -47,9 +47,7 @@ public class CompanyService {
         return true;
     }
 
-    public CompanyDto getCompany(String authorization) throws ObjectNotFoundException {
-        String company=userService.findUserByName(
-                jwtUtility.getUsernameFromToken(authorization.substring(7))).getCompany();
+    public CompanyDto getCompany(String company) throws ObjectNotFoundException {
         for (CompanyEntity companyEntity : companyRepository.findAll()) {
             if (companyEntity.getCompanyName().equals(company)) {
                 return new CompanyDto(

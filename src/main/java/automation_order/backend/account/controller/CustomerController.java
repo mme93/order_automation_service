@@ -19,8 +19,8 @@ public class CustomerController {
     }
 
     @PostMapping("/create")
-    public void createCustomer(){
-
+    public void createCustomer(@RequestHeader("Company") String company){
+        System.err.println(company);
     }
 
 }

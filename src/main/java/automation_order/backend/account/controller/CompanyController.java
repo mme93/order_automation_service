@@ -31,8 +31,8 @@ public class CompanyController {
 
     }
     @GetMapping("/")
-    public ResponseEntity<CompanyDto>getCompany(@RequestHeader("Authorization")String authorization){
-        return new ResponseEntity(companyService.getCompany(authorization),HttpStatus.OK);
+    public ResponseEntity<CompanyDto>getCompany(@RequestHeader("Company") String company){
+        return new ResponseEntity(companyService.getCompany(company),HttpStatus.OK);
     }
     @GetMapping("/all")
     public ResponseEntity<List<CompanyDto>>getAll(){
