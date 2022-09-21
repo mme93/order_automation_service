@@ -1,5 +1,7 @@
 package automation_order.backend.security.controller;
 
+import automation_order.backend.account.service.UserService;
+import automation_order.backend.security.model.JwtLoginToken;
 import automation_order.backend.security.model.JwtRequest;
 import automation_order.backend.security.model.JwtResponse;
 import automation_order.backend.security.service.SecurityUserService;
@@ -15,18 +17,21 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "*")
 public class AuthenticateController {
 
-    @Autowired
-    private JWTUtility jwtUtility;
+    private final JWTUtility jwtUtility;
+    private final AuthenticationManager authenticationManager;
+    private final SecurityUserService securityUserService;
+    private final UserService userService;
 
     @Autowired
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private SecurityUserService userService;
-
+    public AuthenticateController(JWTUtility jwtUtility, AuthenticationManager authenticationManager, SecurityUserService securityUserService, UserService userService) {
+        this.jwtUtility = jwtUtility;
+        this.authenticationManager = authenticationManager;
+        this.securityUserService = securityUserService;
+        this.userService = userService;
+    }
 
     @PostMapping("/authenticate")
-    public JwtResponse authenticate(@RequestBody JwtRequest jwtRequest) throws Exception{
+    public JwtLoginToken authenticate(@RequestBody JwtRequest jwtRequest) throws Exception{
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
@@ -35,12 +40,13 @@ public class AuthenticateController {
                     )
             );
         } catch (BadCredentialsException e) {
-            return  new JwtResponse(e.getMessage());
+            return  new JwtLoginToken(e.getMessage(),e.getMessage());
         }
         final UserDetails userDetails
-                = userService.loadUserByUsername(jwtRequest.getUsername());
+                = securityUserService.loadUserByUsername(jwtRequest.getUsername());
         final String token =
                 jwtUtility.generateToken(userDetails);
-        return  new JwtResponse(token);
+        String company=this.userService.findUserByName(jwtRequest.getUsername()).getCompany();
+        return  new JwtLoginToken(token,company);
     }
 }
