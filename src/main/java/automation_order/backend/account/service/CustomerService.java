@@ -24,6 +24,7 @@ public class CustomerService {
         for(CustomerEntity customerEntity:this.customerRepository.findAll()){
             if(customerEntity.getCompany().equals(company)){
                 customerDtos.add(new CustomerDto(
+                        customerEntity.getId(),
                         customerEntity.getFirstName(),
                         customerEntity.getLastName(),
                         customerEntity.getEmail(),
