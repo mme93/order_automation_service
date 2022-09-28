@@ -23,6 +23,10 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
+    @PutMapping("/update")
+    public void updateCustomer(@RequestBody CustomerDto customerDto) {
+        this.customerService.updateCustomer(customerDto);
+    }
     @DeleteMapping("/delete/{id}")
     public void deleteCustomer(@PathVariable String id){
         this.customerService.deleteCustomer(id);

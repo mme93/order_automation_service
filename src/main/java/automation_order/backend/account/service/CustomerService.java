@@ -66,4 +66,18 @@ public class CustomerService {
     public Object getCustomerByID(String id) {
         return this.customerRepository.findById(Long.valueOf(id));
     }
+
+    public void updateCustomer(CustomerDto customerDto) {
+        this.customerRepository.save(new CustomerEntity(
+                customerDto.getFirstName(),
+                customerDto.getLastName(),
+                customerDto.getEmail(),
+                customerDto.getCity(),
+                customerDto.getStreet(),
+                customerDto.getPostalCode(),
+                customerDto.getCallNumber(),
+                customerDto.getInformation(),
+                customerDto.getCompany()
+        ));
+    }
 }
