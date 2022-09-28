@@ -19,10 +19,10 @@ public class CustomerService {
         this.customerRepository = customerRepository;
     }
 
-    public List<CustomerDto>getAllCustomer(String company){
-        List<CustomerDto>customerDtos = new ArrayList<>();
-        for(CustomerEntity customerEntity:this.customerRepository.findAll()){
-            if(customerEntity.getCompany().equals(company)){
+    public List<CustomerDto> getAllCustomer(String company) {
+        List<CustomerDto> customerDtos = new ArrayList<>();
+        for (CustomerEntity customerEntity : this.customerRepository.findAll()) {
+            if (customerEntity.getCompany().equals(company)) {
                 customerDtos.add(new CustomerDto(
                         customerEntity.getId(),
                         customerEntity.getFirstName(),
@@ -40,8 +40,8 @@ public class CustomerService {
         return customerDtos;
     }
 
-    public boolean createCustomer(CustomerDto customerDto){
-        try{
+    public boolean createCustomer(CustomerDto customerDto) {
+        try {
             this.customerRepository.save(new CustomerEntity(
                     customerDto.getFirstName(),
                     customerDto.getLastName(),
@@ -54,12 +54,13 @@ public class CustomerService {
                     customerDto.getCompany()
             ));
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
     }
-    public void deleteCustomer(String id){
+
+    public void deleteCustomer(String id) {
         this.customerRepository.deleteById(Long.valueOf(id));
     }
 
@@ -68,16 +69,16 @@ public class CustomerService {
     }
 
     public void updateCustomer(CustomerDto customerDto) {
-        this.customerRepository.save(new CustomerEntity(
-                customerDto.getFirstName(),
-                customerDto.getLastName(),
-                customerDto.getEmail(),
-                customerDto.getCity(),
-                customerDto.getStreet(),
-                customerDto.getPostalCode(),
-                customerDto.getCallNumber(),
-                customerDto.getInformation(),
-                customerDto.getCompany()
-        ));
+        CustomerEntity customerEntity = this.customerRepository.findById(Long.valueOf(customerDto.getId())).get();
+        customerEntity.setFirstName(customerDto.getFirstName());
+        customerEntity.setLastName(customerDto.getLastName());
+        customerEntity.setEmail(customerDto.getEmail());
+        customerEntity.setCity(customerDto.getCity());
+        customerEntity.setStreet(customerDto.getStreet());
+        customerEntity.setPostalCode(customerDto.getPostalCode());
+        customerEntity.setCallNumber(customerDto.getCallNumber());
+        customerEntity.setInformation(customerDto.getInformation());
+        customerEntity.setCompany(customerDto.getCompany());
+        this.customerRepository.saveAndFlush(customerEntity);
     }
 }
