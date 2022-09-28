@@ -59,5 +59,11 @@ public class CustomerService {
             return false;
         }
     }
+    public void deleteCustomer(String id){
+        this.customerRepository.deleteById(Long.valueOf(id));
+    }
 
+    public Object getCustomerByID(String id) {
+        return this.customerRepository.findById(Long.valueOf(id));
+    }
 }

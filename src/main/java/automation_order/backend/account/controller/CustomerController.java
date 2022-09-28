@@ -23,6 +23,11 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
+    @DeleteMapping("/delete/{id}")
+    public void deleteCustomer(@PathVariable String id){
+        this.customerService.deleteCustomer(id);
+    }
+
     @PostMapping("/create")
     public ResponseEntity createCustomer(@RequestBody CustomerDto customerDto) {
         if (this.customerService.createCustomer(customerDto)) {
@@ -32,6 +37,10 @@ public class CustomerController {
         }
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<CustomerDto> getCustomerById(@PathVariable String id){
+        return new ResponseEntity(this.customerService.getCustomerByID(id),HttpStatus.OK);
+    }
     @GetMapping("/all")
     public ResponseEntity<List<CustomerDto>>getAllCustomer(@RequestHeader("Company")String company){
         List<CustomerDto> customerDtos = this.customerService.getAllCustomer(company);
