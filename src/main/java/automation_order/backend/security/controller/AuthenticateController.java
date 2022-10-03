@@ -2,7 +2,6 @@ package automation_order.backend.security.controller;
 
 import automation_order.backend.account.model.dto.UserDto;
 import automation_order.backend.account.service.UserService;
-import automation_order.backend.security.model.JwtLoginToken;
 import automation_order.backend.security.model.JwtRequest;
 import automation_order.backend.security.model.Login;
 import automation_order.backend.security.service.SecurityUserService;
@@ -32,6 +31,7 @@ public class AuthenticateController {
         this.securityUserService = securityUserService;
         this.userService = userService;
     }
+
     @PostMapping("/authenticate")
     public Object authenticate(@RequestBody JwtRequest jwtRequest) throws Exception{
         try {
@@ -51,26 +51,5 @@ public class AuthenticateController {
         UserDto userDto =this.userService.findUserByName(jwtRequest.getUsername());
         return  new Login(token,userDto.getCompany(),userDto.getUserId());
     }
-/*
-    @PostMapping("/authenticate")
-    public JwtLoginToken authenticate(@RequestBody JwtRequest jwtRequest) throws Exception{
-        try {
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            jwtRequest.getUsername(),
-                            jwtRequest.getPassword()
-                    )
-            );
-        } catch (BadCredentialsException e) {
-            return  new JwtLoginToken(e.getMessage(),e.getMessage());
-        }
-        final UserDetails userDetails
-                = securityUserService.loadUserByUsername(jwtRequest.getUsername());
-        final String token =
-                jwtUtility.generateToken(userDetails);
-        String company=this.userService.findUserByName(jwtRequest.getUsername()).getCompany();
-        return  new JwtLoginToken(token,company);
-    }
 
- */
 }
