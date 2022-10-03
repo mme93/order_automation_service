@@ -46,7 +46,8 @@ public class OrderService {
                 orderDto.getStartDate(),
                 orderDto.getEndDate(),
                 orderDto.getFurtherInformation(),
-                todoEntities
+                todoEntities,
+                orderDto.getUserId()
         ));
     }
 

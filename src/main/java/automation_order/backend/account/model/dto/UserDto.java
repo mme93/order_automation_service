@@ -11,6 +11,8 @@ import lombok.Setter;
 @Setter
 public class UserDto {
 
+    private Long userId;
+
     private String password;
 
     private String username;
@@ -29,7 +31,7 @@ public class UserDto {
 
     private String info;
 
-    public UserDto(String username, String firstName, String lastName, String email, String callNumber, String company, String roll, String info) {
+    public UserDto(String username, String firstName, String lastName, String email, String callNumber, String company, String roll, String info, Long userId) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -38,5 +40,6 @@ public class UserDto {
         this.company = company;
         this.roll = roll;
         this.info = info;
+        this.userId=userId;
     }
 }

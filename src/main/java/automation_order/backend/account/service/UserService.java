@@ -34,7 +34,8 @@ public class UserService {
                     userEntity.getCallNumber(),
                     userEntity.getCompany(),
                     userEntity.getRoll(),
-                    userEntity.getInfo()
+                    userEntity.getInfo(),
+                    userEntity.getId()
             ));
         }
         return userDtoList;
@@ -50,7 +51,8 @@ public class UserService {
                 userEntity.getCallNumber(),
                 userEntity.getCompany(),
                 userEntity.getRoll(),
-                userEntity.getInfo()
+                userEntity.getInfo(),
+                userEntity.getId()
         );
     }
 
