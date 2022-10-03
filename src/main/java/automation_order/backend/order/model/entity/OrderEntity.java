@@ -61,7 +61,9 @@ public class OrderEntity {
 
     private Long userId;
 
-    public OrderEntity(Long customerID, String firstName, String lastName, String email, String city, String street, String postalCode, String callNumber, String information, String company, String orderInformation, String refNr, String createDate, Date startDate, Date endDate, String furtherInformation, List<TodoEntity> todos,Long userId) {
+    private int status;
+
+    public OrderEntity(Long customerID, String firstName, String lastName, String email, String city, String street, String postalCode, String callNumber, String information, String company, String orderInformation, String refNr, String createDate, Date startDate, Date endDate, String furtherInformation, List<TodoEntity> todos,Long userId,int Status) {
         this.customerID = customerID;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -80,5 +82,6 @@ public class OrderEntity {
         this.furtherInformation = furtherInformation;
         this.todos = todos;
         this.userId =userId;
+        this.status =Status;
     }
 }

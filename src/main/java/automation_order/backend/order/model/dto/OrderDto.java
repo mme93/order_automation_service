@@ -55,4 +55,6 @@ public class OrderDto {
 
     private Long userId;
 
+    private int Status;
+
 }
