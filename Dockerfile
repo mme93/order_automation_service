@@ -6,5 +6,5 @@ RUN mvn -f /home/app/pom.xml clean package
 
 FROM openjdk:18-alpine
 COPY --from=build /home/app/target/backend-0.0.1-SNAPSHOT.jar /usr/local/lib/backend.jar
-EXPOSE 9999
+EXPOSE 8998
 ENTRYPOINT ["java","-jar","/usr/local/lib/backend.jar"]
