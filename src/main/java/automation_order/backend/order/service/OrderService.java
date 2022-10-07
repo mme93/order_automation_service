@@ -49,7 +49,8 @@ public class OrderService {
                 orderDto.getFurtherInformation(),
                 todoEntities,
                 orderDto.getUserId(),
-                orderDto.getStatus()
+                orderDto.getStatus(),
+                "PASSWORD"
         ));
     }
 
@@ -83,7 +84,8 @@ public class OrderService {
                     orderEntity.getFurtherInformation(),
                     todos,
                     orderEntity.getUserId(),
-                    orderEntity.getStatus()
+                    orderEntity.getStatus(),
+                    orderEntity.getPassword()
             ));
         });
 

@@ -57,4 +57,6 @@ public class OrderDto {
 
     private int Status;
 
+    private String password;
+
 }
