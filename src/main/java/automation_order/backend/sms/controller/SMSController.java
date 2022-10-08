@@ -22,8 +22,14 @@ public class SMSController {
         this.orderService = orderService;
     }
 
-    @PostMapping("/send/{password}")
-    public ResponseEntity<String>sendSMSWithPassword(@PathVariable String password){
+    @PostMapping("/test")
+    public ResponseEntity<SMS> getTest(@RequestBody String password){
+        System.err.println(password);
+        return new ResponseEntity(smsService.createSMS(this.orderService.getOrderByPassword("R8pn6b5999")),HttpStatus.OK);
+    }
+
+    @PostMapping("/send/t")
+    public ResponseEntity<String>sendSMSWithPassword(@RequestBody String password){
         return new ResponseEntity(smsService.sendMsg(smsService.createSMS(this.orderService.getOrderByPassword(password))),HttpStatus.OK);
     }
 
