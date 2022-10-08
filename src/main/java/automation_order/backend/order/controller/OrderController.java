@@ -24,9 +24,8 @@ public class OrderController {
 
 
     @PostMapping("/create")
-    public ResponseEntity createOrder(@RequestBody OrderDto orderDto) {
-        this.orderService.createOrder(orderDto);
-        return new ResponseEntity(HttpStatus.OK);
+    public ResponseEntity<String> createOrder(@RequestBody OrderDto orderDto) {
+        return new ResponseEntity(this.orderService.createOrder(orderDto),HttpStatus.OK);
     }
 
     @GetMapping("/all")

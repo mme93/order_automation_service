@@ -1,5 +1,6 @@
 package automation_order.backend.sms.service;
 
+import automation_order.backend.order.model.dto.OrderDto;
 import automation_order.backend.sms.model.SMS;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,6 @@ public class SMSService {
 
     private WebClient webClient;
 
-
     private final Environment env;
 
     @Autowired
@@ -27,6 +27,16 @@ public class SMSService {
     @PostConstruct
     private void setup() {
         this.webClient = WebClient.builder().build();
+    }
+
+    public SMS createSMS(OrderDto orderDto){
+        StringBuilder builder = new StringBuilder();
+        builder.append("Order was created at the company  "+orderDto.getCompany()+"\n");
+        builder.append("You can see the order status at the following link: "+
+                env.getProperty("order_status.url")+"?orderId="+orderDto.getId()+"&password="+orderDto.getPassword()
+                +"\n");
+        builder.append("Order number is "+orderDto.getId()+" and the password is "+orderDto.getPassword()+"\n");
+        return new SMS(orderDto.getCallNumber(),builder.toString());
     }
 
     public String sendMsg(SMS sms) {

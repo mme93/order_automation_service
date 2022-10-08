@@ -31,7 +31,7 @@ public class OrderService {
         this.env = env;
     }
 
-    public void createOrder(OrderDto orderDto) {
+    public String createOrder(OrderDto orderDto) {
         String password=passwordGenerator.createPassword();
         List<TodoEntity> todoEntities = new ArrayList<>();
         orderDto.getTodos().forEach(todoDto -> {
@@ -63,13 +63,7 @@ public class OrderService {
                 orderDto.getStatus(),
                 password
         ));
-        StringBuilder builder = new StringBuilder();
-        builder.append("Order was created at the company  "+orderDto.getCompany()+"\n");
-        builder.append("You can see the order status at the following link: "+
-                env.getProperty("order_status.url")+"?orderId="+orderDto.getId()+"&password="+password
-                +"\n");
-        builder.append("Order number is "+orderDto.getId()+" and the password is "+password+"\n");
-        smsService.sendMsg(new SMS(orderDto.getCallNumber(),builder.toString()));
+        return password;
     }
 
     public List<OrderDto> getAll() {
@@ -109,7 +103,39 @@ public class OrderService {
 
         return orderDtoList;
     }
-
+    public OrderDto getOrderByPassword(String password){
+        OrderEntity orderEntity = this.orderRepository.findByPassword(password);
+        List<TodoDto> todos = new ArrayList<>();
+        orderEntity.getTodos().forEach(todoEntity -> todos.add(new TodoDto(
+                todoEntity.getInformation(),
+                todoEntity.getTodo(),
+                todoEntity.getStatus(),
+                todoEntity.getId()
+        )));
+        OrderDto orderDto = new OrderDto(
+                orderEntity.getId(),
+                orderEntity.getCustomerID(),
+                orderEntity.getFirstName(),
+                orderEntity.getLastName(),
+                orderEntity.getEmail(),
+                orderEntity.getCity(),
+                orderEntity.getStreet(),
+                orderEntity.getPostalCode(),
+                orderEntity.getCallNumber(),
+                orderEntity.getInformation(),
+                orderEntity.getCompany(),
+                orderEntity.getOrderInformation(),
+                orderEntity.getRefNr(),
+                orderEntity.getCreateDate(),
+                orderEntity.getStartDate(),
+                orderEntity.getEndDate(),
+                orderEntity.getFurtherInformation(),
+                todos,
+                orderEntity.getUserId(),
+                orderEntity.getStatus(),
+                orderEntity.getPassword());
+        return orderDto;
+    }
     public OrderDto getOrderById(Long id) {
         OrderEntity orderEntity = this.orderRepository.findById(id).get();
         List<TodoDto> todos = new ArrayList<>();

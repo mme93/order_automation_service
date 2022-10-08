@@ -1,5 +1,6 @@
 package automation_order.backend.sms.controller;
 
+import automation_order.backend.order.service.OrderService;
 import automation_order.backend.sms.model.SMS;
 import automation_order.backend.sms.service.SMSService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,20 +8,24 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.ConnectException;
-
 
 @RestController
 @RequestMapping("/SMS")
 public class SMSController {
 
     private final SMSService smsService;
+    private final OrderService orderService;
 
     @Autowired
-    public SMSController(SMSService smsService) {
+    public SMSController(SMSService smsService, OrderService orderService) {
         this.smsService = smsService;
+        this.orderService = orderService;
     }
 
+    @PostMapping("/send/{password}")
+    public ResponseEntity<String>sendSMSWithPassword(@PathVariable String password){
+        return new ResponseEntity(smsService.sendMsg(smsService.createSMS(this.orderService.getOrderByPassword(password))),HttpStatus.OK);
+    }
 
     @PostMapping("/send")
     public ResponseEntity<String> senSMS(@RequestBody SMS sms) {
