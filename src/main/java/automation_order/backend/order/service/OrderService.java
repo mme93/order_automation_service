@@ -55,7 +55,7 @@ public class OrderService {
     }
 
     public List<OrderDto> getAll() {
-        List<OrderDto>orderDtoList = new ArrayList<>();
+        List<OrderDto> orderDtoList = new ArrayList<>();
         this.orderRepository.findAll().forEach(orderEntity -> {
             List<TodoDto> todos = new ArrayList<>();
             orderEntity.getTodos().forEach(todoEntity -> todos.add(new TodoDto(
@@ -92,8 +92,38 @@ public class OrderService {
         return orderDtoList;
     }
 
-    public OrderDto getOrderById(String id) {
-        return null;
+    public OrderDto getOrderById(Long id) {
+        OrderEntity orderEntity = this.orderRepository.findById(id).get();
+        List<TodoDto> todos = new ArrayList<>();
+        orderEntity.getTodos().forEach(todoEntity -> todos.add(new TodoDto(
+                todoEntity.getInformation(),
+                todoEntity.getTodo(),
+                todoEntity.getStatus(),
+                todoEntity.getId()
+        )));
+        OrderDto orderDto = new OrderDto(
+                orderEntity.getId(),
+                orderEntity.getCustomerID(),
+                orderEntity.getFirstName(),
+                orderEntity.getLastName(),
+                orderEntity.getEmail(),
+                orderEntity.getCity(),
+                orderEntity.getStreet(),
+                orderEntity.getPostalCode(),
+                orderEntity.getCallNumber(),
+                orderEntity.getInformation(),
+                orderEntity.getCompany(),
+                orderEntity.getOrderInformation(),
+                orderEntity.getRefNr(),
+                orderEntity.getCreateDate(),
+                orderEntity.getStartDate(),
+                orderEntity.getEndDate(),
+                orderEntity.getFurtherInformation(),
+                todos,
+                orderEntity.getUserId(),
+                orderEntity.getStatus(),
+                orderEntity.getPassword());
+        return orderDto;
     }
 
     public void updateOrder(OrderDto orderDto) {
