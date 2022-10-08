@@ -16,9 +16,10 @@ public class SMSService {
 
     private WebClient webClient;
 
-    @Autowired
+
     private final Environment env;
 
+    @Autowired
     public SMSService(Environment env) {
         this.env = env;
     }

@@ -19,28 +19,25 @@ public class ExternalController {
         this.orderService = orderService;
     }
 
-    @GetMapping("/order")
-    public String getOrder(){
-        return "Order";
-    }
     @GetMapping("/order/{orderId}/{password}")
-    public ResponseEntity getOrderById(@PathVariable  Long orderId,@PathVariable  String password){
+    public ResponseEntity getOrderById(@PathVariable Long orderId, @PathVariable String password) {
         System.err.println(password);
-        for(OrderDto orderDto: this.orderService.getAll()){
-            if(orderDto.getId().equals(orderId)&&orderDto.getPassword().equals(password)){
-                return new ResponseEntity(orderDto,HttpStatus.OK);
+        for (OrderDto orderDto : this.orderService.getAll()) {
+            if (orderDto.getId().equals(orderId) && orderDto.getPassword().equals(password)) {
+                return new ResponseEntity(orderDto, HttpStatus.OK);
             }
         }
         return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
+
     @PostMapping("/order/exist")
-    public ResponseEntity<Boolean> isOrderExist(@RequestBody OrderLogin orderLogin){
-        for(OrderDto orderDto: this.orderService.getAll()){
-            if(orderDto.getId().equals(orderLogin.getOrderId())&&orderDto.getPassword().equals(orderLogin.getPassword())){
-                return new ResponseEntity(true,HttpStatus.OK);
+    public ResponseEntity<Boolean> isOrderExist(@RequestBody OrderLogin orderLogin) {
+        for (OrderDto orderDto : this.orderService.getAll()) {
+            if (orderDto.getId().equals(orderLogin.getOrderId()) && orderDto.getPassword().equals(orderLogin.getPassword())) {
+                return new ResponseEntity(true, HttpStatus.OK);
             }
         }
-        return new ResponseEntity(false,HttpStatus.NOT_FOUND);
+        return new ResponseEntity(false, HttpStatus.NOT_FOUND);
     }
 
 }

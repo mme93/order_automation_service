@@ -5,7 +5,11 @@ import automation_order.backend.order.model.dto.TodoDto;
 import automation_order.backend.order.model.entity.OrderEntity;
 import automation_order.backend.order.model.entity.TodoEntity;
 import automation_order.backend.order.repository.OrderRepository;
+import automation_order.backend.sms.model.SMS;
+import automation_order.backend.sms.service.SMSService;
+import automation_order.backend.utility.PasswordGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,13 +19,20 @@ import java.util.List;
 public class OrderService {
 
     private final OrderRepository orderRepository;
+    private final PasswordGenerator passwordGenerator;
+    private final SMSService smsService;
+    private final Environment env;
 
     @Autowired
-    public OrderService(OrderRepository orderRepository) {
+    public OrderService(OrderRepository orderRepository, PasswordGenerator passwordGenerator, SMSService smsService, Environment env) {
         this.orderRepository = orderRepository;
+        this.passwordGenerator = passwordGenerator;
+        this.smsService = smsService;
+        this.env = env;
     }
 
     public void createOrder(OrderDto orderDto) {
+        String password=passwordGenerator.createPassword();
         List<TodoEntity> todoEntities = new ArrayList<>();
         orderDto.getTodos().forEach(todoDto -> {
             todoEntities.add(new TodoEntity(
@@ -50,8 +61,15 @@ public class OrderService {
                 todoEntities,
                 orderDto.getUserId(),
                 orderDto.getStatus(),
-                "PASSWORD"
+                password
         ));
+        StringBuilder builder = new StringBuilder();
+        builder.append("Order was created at the company  "+orderDto.getCompany()+"\n");
+        builder.append("You can see the order status at the following link: "+
+                env.getProperty("order_status.url")+"?orderId="+orderDto.getId()+"&password="+password
+                +"\n");
+        builder.append("Order number is "+orderDto.getId()+" and the password is "+password+"\n");
+        smsService.sendMsg(new SMS(orderDto.getCallNumber(),builder.toString()));
     }
 
     public List<OrderDto> getAll() {
