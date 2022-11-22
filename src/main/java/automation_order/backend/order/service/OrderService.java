@@ -171,6 +171,12 @@ public class OrderService {
     }
 
     public void updateOrder(OrderDto orderDto) {
+
+    }
+    public void updateOrderStatus(OrderDto orderDto){
+        OrderEntity orderEntity = this.orderRepository.findById(orderDto.getId()).get();
+        orderEntity.setStatus(orderDto.getStatus());
+        this.orderRepository.save(orderEntity);
     }
 
     public void deleteOrder(String id) {

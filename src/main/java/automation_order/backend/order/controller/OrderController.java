@@ -24,7 +24,6 @@ public class OrderController {
         this.smsService = smsService;
     }
 
-
     @PostMapping("/create")
     public ResponseEntity<String> createOrder(@RequestBody OrderDto orderDto) {
         String password=this.orderService.createOrder(orderDto);
@@ -51,6 +50,12 @@ public class OrderController {
     @PutMapping("/update")
     public ResponseEntity updateOrder(@RequestBody OrderDto orderDto) {
         this.orderService.updateOrder(orderDto);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+    @PutMapping("/updateStatus")
+    public ResponseEntity updateOrderStatus(@RequestBody OrderDto orderDto) {
+        this.orderService.updateOrderStatus(orderDto);
+        System.out.println(orderDto.getStatus());
         return new ResponseEntity(HttpStatus.OK);
     }
 }
