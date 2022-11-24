@@ -5,7 +5,6 @@ import automation_order.backend.order.model.dto.TodoDto;
 import automation_order.backend.order.model.entity.OrderEntity;
 import automation_order.backend.order.model.entity.TodoEntity;
 import automation_order.backend.order.repository.OrderRepository;
-import automation_order.backend.sms.model.SMS;
 import automation_order.backend.sms.service.SMSService;
 import automation_order.backend.utility.PasswordGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +31,7 @@ public class OrderService {
     }
 
     public String createOrder(OrderDto orderDto) {
-        String password=passwordGenerator.createPassword();
+        String password = passwordGenerator.createPassword();
         List<TodoEntity> todoEntities = new ArrayList<>();
         orderDto.getTodos().forEach(todoDto -> {
             todoEntities.add(new TodoEntity(
@@ -103,7 +102,8 @@ public class OrderService {
 
         return orderDtoList;
     }
-    public OrderDto getOrderByPassword(String password){
+
+    public OrderDto getOrderByPassword(String password) {
         OrderEntity orderEntity = this.orderRepository.findByPassword(password);
         List<TodoDto> todos = new ArrayList<>();
         orderEntity.getTodos().forEach(todoEntity -> todos.add(new TodoDto(
@@ -136,6 +136,7 @@ public class OrderService {
                 orderEntity.getPassword());
         return orderDto;
     }
+
     public OrderDto getOrderById(Long id) {
         OrderEntity orderEntity = this.orderRepository.findById(id).get();
         List<TodoDto> todos = new ArrayList<>();
@@ -171,15 +172,41 @@ public class OrderService {
     }
 
     public void updateOrder(OrderDto orderDto) {
-
+        OrderEntity orderEntity = this.orderRepository.findById(orderDto.getId()).get();
+        orderEntity.setFirstName(orderDto.getFirstName());
+        orderEntity.setLastName(orderDto.getLastName());
+        orderEntity.setEmail(orderDto.getEmail());
+        orderEntity.setCity(orderDto.getCity());
+        orderEntity.setStreet(orderDto.getStreet());
+        orderEntity.setPostalCode(orderDto.getPostalCode());
+        orderEntity.setCallNumber(orderDto.getCallNumber());
+        orderEntity.setInformation(orderDto.getInformation());
+        orderEntity.setOrderInformation(orderDto.getOrderInformation());
+        orderEntity.setRefNr(orderDto.getRefNr());
+        orderEntity.setCreateDate(orderDto.getCreateDate());
+        orderEntity.setStartDate(orderDto.getStartDate());
+        orderEntity.setEndDate(orderDto.getEndDate());
+        orderEntity.setFurtherInformation(orderDto.getFurtherInformation());
+        List<TodoEntity> todoEntities = new ArrayList<>();
+        for (int i = 0; i < orderDto.getTodos().size(); i++) {
+            TodoEntity todoEntity=orderEntity.getTodos().get(i);
+            TodoDto dto=orderDto.getTodos().get(i);
+            todoEntity.setTodo(dto.getTodo());
+            todoEntity.setStatus(dto.getStatus());
+            todoEntity.setInformation(dto.getInformation());
+            todoEntities.add(todoEntity);
+        }
+        orderEntity.setTodos(todoEntities);
+        this.orderRepository.save(orderEntity);
     }
-    public void updateOrderStatus(OrderDto orderDto){
+
+    public void updateOrderStatus(OrderDto orderDto) {
         OrderEntity orderEntity = this.orderRepository.findById(orderDto.getId()).get();
         orderEntity.setStatus(orderDto.getStatus());
         this.orderRepository.save(orderEntity);
     }
 
-    public void deleteOrder(String id) {
-        this.orderRepository.deleteById(Long.valueOf(id));
+    public void deleteOrder(Long id) {
+        this.orderRepository.deleteById(id);
     }
 }

@@ -41,9 +41,9 @@ public class OrderController {
         return new ResponseEntity<>(this.orderService.getOrderById(id),HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity delteOrder(@PathVariable String id) {
-        this.orderService.deleteOrder(id);
+    @DeleteMapping("/delete/{orderId}")
+    public ResponseEntity deleteOrder(@PathVariable Long orderId){
+        this.orderService.deleteOrder(orderId);
         return new ResponseEntity(HttpStatus.OK);
     }
 
@@ -55,7 +55,7 @@ public class OrderController {
     @PutMapping("/updateStatus")
     public ResponseEntity updateOrderStatus(@RequestBody OrderDto orderDto) {
         this.orderService.updateOrderStatus(orderDto);
-        System.out.println(orderDto.getStatus());
         return new ResponseEntity(HttpStatus.OK);
     }
+
 }
