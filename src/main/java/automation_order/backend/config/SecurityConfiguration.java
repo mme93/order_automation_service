@@ -51,6 +51,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .antMatchers("/external/*/*")
                 .permitAll()
+                .antMatchers("/isTokenExpired")
+                .permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()

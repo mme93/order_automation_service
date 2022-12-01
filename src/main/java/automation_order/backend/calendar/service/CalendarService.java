@@ -2,7 +2,6 @@ package automation_order.backend.calendar.service;
 
 import automation_order.backend.calendar.model.dto.CalendarEventDto;
 import automation_order.backend.order.model.entity.OrderEntity;
-import automation_order.backend.order.model.entity.TodoEntity;
 import automation_order.backend.order.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
