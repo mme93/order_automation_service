@@ -15,25 +15,32 @@ import org.springframework.web.bind.annotation.RestController;
 public class TokenController {
 
     private final JWTUtility jwtUtility;
+    private final SecurityUserService securityUserService;
 
     @Autowired
-    public TokenController(JWTUtility jwtUtility) {
+    public TokenController(JWTUtility jwtUtility, SecurityUserService securityUserService) {
         this.jwtUtility = jwtUtility;
+        this.securityUserService = securityUserService;
     }
 
     @PostMapping("/isTokenExpired")
     public ResponseEntity<JwtResponse> isTokenExpired(@RequestBody JwtResponse jwtResponse) {
-
+        String oldToken = jwtResponse.getJwtToken();
         try {
-            if (this.jwtUtility.isTokenExpired(jwtResponse.getJwtToken())) {
+            if (this.jwtUtility.isTokenExpired(oldToken)) {
                 return new ResponseEntity(HttpStatus.FORBIDDEN);
             }
-            return new ResponseEntity(jwtResponse.getJwtToken(), HttpStatus.OK);
+            jwtResponse.setJwtToken(
+                    this.jwtUtility.generateToken(
+                            securityUserService.loadUserByUsername(
+                                    this.jwtUtility.getUsernameFromToken(oldToken)
+                            )
+                    )
+            );
+            return new ResponseEntity(jwtResponse, HttpStatus.OK);
         } catch (ExpiredJwtException e) {
             return new ResponseEntity(HttpStatus.FORBIDDEN);
         }
-
-
     }
 
 }
