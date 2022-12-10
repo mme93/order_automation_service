@@ -42,7 +42,9 @@ public class AuthenticateController {
                     )
             );
         } catch (BadCredentialsException e) {
-            return  new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
+            return  new ResponseEntity(e.getMessage(), HttpStatus.FORBIDDEN);
+        } catch (IllegalArgumentException e){
+            return  new ResponseEntity(e.getMessage(), HttpStatus.FORBIDDEN);
         }
         final UserDetails userDetails
                 = securityUserService.loadUserByUsername(jwtRequest.getUsername());

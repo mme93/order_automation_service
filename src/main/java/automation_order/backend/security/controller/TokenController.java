@@ -40,6 +40,8 @@ public class TokenController {
             return new ResponseEntity(jwtResponse, HttpStatus.OK);
         } catch (ExpiredJwtException e) {
             return new ResponseEntity(HttpStatus.FORBIDDEN);
+        }catch (IllegalArgumentException e){
+            return  new ResponseEntity(e.getMessage(), HttpStatus.FORBIDDEN);
         }
     }
 
